@@ -1,15 +1,16 @@
-import tweetController from "./tweet.index.js";
+import likeController from "./like.index.js";
 import { Router } from "express";
 
 const router = Router();
-router.get("/:tweetId", read);
+router.get("/:id", read);
 router.get("/", readAll);
 router.post("/", create);
-router.patch("/", update);
 router.delete("/:id", del);
+router.delete("/:tweetId", delAll);
+
 
 function create(req, res) {
-  tweetController
+  likeController
     .create(req.body)
     .then((data) => {
       res.send(data);
@@ -18,8 +19,8 @@ function create(req, res) {
     .catch((err) => console.log("Error ", err));
 }
 function read(req, res) {
-  tweetController
-    .read(req.params.tweetId)
+  likeController
+    .read(req.params.id)
     .then((data) => {
       res.send(data);
       console.log("Data read correctly");
@@ -27,27 +28,16 @@ function read(req, res) {
     .catch((err) => console.log("Error Date read incorrectly ", err));
 }
 function readAll(req, res) {
-  tweetController
-    .readAll(req.body.author)
-    .then((data) => {
-      res.send(data);
-      console.log("Data read correctly");
-    })
-    .catch((err) => console.log("Error Date read incorrectly ", err));
-}
-function update(req, res) {
-  tweetController
-    .update(req.body)
-    .then((data) => {
-      res.send(data);
-      console.log("Data updated correctly");
-    })
-    .catch((err) => {
-      console.log("Error updating the document ", err);
-    });
-}
+    likeController
+      .readAll(req.body.tweetID)
+      .then((data) => {
+        res.send(data);
+        console.log("Data read correctly");
+      })
+      .catch((err) => console.log("Error Date read incorrectly ", err));
+  }
 function del(req, res) {
-  tweetController
+  likeController
     .del(req.params.id)
     .then((data) => {
       res.send(data);
@@ -57,5 +47,16 @@ function del(req, res) {
       console.log("Error deleting document ", err);
     });
 }
+function delAll(req, res) {
+    likeController
+      .delAll(req.params.tweetId)
+      .then((data) => {
+        res.send(data);
+        console.log("Document deleted successfuly");
+      })
+      .catch((err) => {
+        console.log("Error deleting document ", err);
+      });
+  }
 
 export default router;

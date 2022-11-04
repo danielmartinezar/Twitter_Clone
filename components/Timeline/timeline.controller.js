@@ -1,18 +1,22 @@
 export default function timelineController(followController, tweetController) {
-  function read(username) {
+  async function read(username) {
     let following = [];
-    followController.readFollowing(username).then((userFollowing) => {
-      following = userFollowing;
-    });
-    return new Promise((res, rej) => {
-      let posts = [];
-      following.map((follow) => {
-        tweetController.read(follow.followed).then((userPosts) => {
-          posts.push(userPosts);
-        });
+    following = await followController.readFollowing(username);
+    return new Promise(async (res, rej) => {
+      const tweets = await Promise.all(
+        following.map(async (follow) => {
+          console.log(follow);
+          return await tweetController.readAll(follow.followed);
+        })
+      );
+      const tweetsSorted = tweets.flat().sort((tweetA, tweetB) => {
+        return new Date(tweetB.date) - new Date(tweetA.date);
       });
-      res(posts)
+      res(tweetsSorted);
     });
   }
+  //   function sortByDate(tweetA,tweetB){
+  //     return new Date(tweetB.date) - new Date(tweetA.date);
+  //   }
   return { read };
 }

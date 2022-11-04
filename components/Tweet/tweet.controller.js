@@ -1,5 +1,5 @@
 import userController from "../User/user.index.js";
-export default function tweetController(tweetModel) {
+export default function tweetController(tweetModel, likeController) {
   function create(tweet) {
     return new Promise((res, rej) => {
       userController.read(tweet.author).then(async (data) => {
@@ -10,14 +10,26 @@ export default function tweetController(tweetModel) {
       });
     });
   }
-  async function read(author) {
+  async function read(tweetID) {
+    return new Promise(async (res) => {
+      let tweet = []
+      tweet.push(await tweetModel.findById(tweetID));
+      console.log(tweet);
+      const likes = await likeController.readAll(tweetID);
+      res([tweet, likes]);
+    });
+  }
+  async function readAll(author) {
     return await tweetModel.find({ author: author });
   }
-  async function update(id, tweetBody) {
-    return await tweetModel.findByIdAndUpdate(id, tweetBody);
+
+  async function update(tweetInfo) {
+    const {tweetId} = tweetInfo;
+    return await tweetModel.findByIdAndUpdate(tweetId, tweetInfo);
   }
   async function del(id) {
+    await likeController.delAll(id);
     return await tweetModel.findByIdAndDelete(id);
   }
-  return { create, read, update, del };
+  return { create, read, readAll, update, del };
 }

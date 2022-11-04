@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import config from "../config.js";
 export default function mongoConnection() {
   const connectionParams = {
     useNewUrlParser: true,
@@ -6,7 +7,7 @@ export default function mongoConnection() {
   };
   mongoose
     .connect(
-      "mongodb+srv://danielmartinezar_:iZKcKcnPbztXDpbs@twitter.e40qjfe.mongodb.net/?retryWrites=true&w=majority",
+      config.DB_URL,
       connectionParams
     )
     .then(() => console.log("Db connected successfuly"))

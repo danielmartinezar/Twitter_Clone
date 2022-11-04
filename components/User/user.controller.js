@@ -12,7 +12,12 @@ export default function userController(userModel) {
     return await userModel.find({ username: username });
   }
   async function update(data) {
-    const { id, username, password, name, surnames, email } = data;
+    let { id, username, password, name, surnames, email } = data;
+    if (password) {
+      await bcrypt
+        .hash(password, 6)
+        .then((encryptedData) => (password = encryptedData));
+    }
     const updatedData = { username, password, name, surnames, email };
     return await userModel.findByIdAndUpdate(id, updatedData);
   }
