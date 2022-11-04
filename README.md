@@ -1,20 +1,5 @@
 # Twitter_Clone
  A basic API clone of twitter developed with Node Js using express and mongo
-## End-Points
-* /users
-* /tweet
-* /follow
-* /timeline
-* /like
-## users
-### Post user Method
-* / 
-#### Receives as mandatory values in body:
-* username
-* password
-* name
-* surnames
-* email
 
 ### Get user Method
 * /:username
