@@ -23,6 +23,6 @@ app.use("/follow", followRoute);
 app.use("/timeline", timelineRoute);
 app.use("/like", likeRoute);
 
-app.listen(config.APP_PORT, () =>
+app.listen(config.PORT, () =>
   console.log(`Listening on port ${config.PORT}`)
 );
