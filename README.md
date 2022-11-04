@@ -81,7 +81,7 @@
 ### Get A Like Method
 * /:likeId
 ### Get All Likes Method
-* /:tweetId
+* /
 ### Delete A Like Method
 * /:likeId
 
