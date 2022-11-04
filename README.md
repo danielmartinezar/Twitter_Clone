@@ -1,6 +1,6 @@
 # Twitter_Clone
  A basic API clone of twitter developed with Node Js using express and mongo
-
+#### URL ACCESS TO SERVICE: https://twitterclone-production-4101.up.railway.app/
 ### Get user Method
 * /:username
 ### Patch user Method
