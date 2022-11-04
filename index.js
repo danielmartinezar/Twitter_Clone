@@ -24,5 +24,5 @@ app.use("/timeline", timelineRoute);
 app.use("/like", likeRoute);
 
 app.listen(config.APP_PORT, () =>
-  console.log(`Listening on port ${config.APP_PORT}`)
+  console.log(`Listening on port ${config.PORT}`)
 );
